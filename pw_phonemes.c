@@ -1,12 +1,13 @@
 /*
  * pw_phonemes.c --- generate secure passwords using phoneme rules
  *
- * Copyright (C) 2001 by Theodore Ts'o
+ * Copyright (C) 2001,2002 by Theodore Ts'o
  * 
  * This file may be distributed under the terms of the GNU Public
  * License.
  */
 
+#include <ctype.h>
 #include "pwgen.h"
 
 struct pw_element elements[] = {
@@ -56,9 +57,9 @@ struct pw_element elements[] = {
 
 void pw_phonemes(char *buf, int size, int pw_flags)
 {
-	int	c, i, len, flags, feature_flags;
-	int	prev, should_be, first;
-	char	*str;
+	int		c, i, len, flags, feature_flags;
+	int		prev, should_be, first;
+	const char	*str;
 
 try_again:
 	feature_flags = pw_flags;

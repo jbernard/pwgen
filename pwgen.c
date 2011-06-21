@@ -1,7 +1,7 @@
 /*
  * pwgen.c --- generate secure passwords
  *
- * Copyright (C) 2001 by Theodore Ts'o
+ * Copyright (C) 2001,2002 by Theodore Ts'o
  * 
  * This file may be distributed under the terms of the GNU Public
  * License.
@@ -10,6 +10,8 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
 #ifdef HAVE_GETOPT_H
 #include <getopt.h>
 #endif
@@ -61,10 +63,9 @@ const char *usage_msg =
 "  -1\n\tDon't print the generated passwords in columns\n"
 ;	
 	
-void usage(void)
+static void usage(void)
 {
 	fprintf(stderr, usage_msg);
-	
 	exit(1);
 }
 
@@ -72,9 +73,10 @@ void usage(void)
 int main(int argc, char **argv)
 {
 	int	term_width = 80;
-	int	c, i, num_cols;
+	int	c, i;
+	int	num_cols = -1;
 	char	*buf, *tmp;
-	void	(*pwgen)(char *buf, int size, int pw_flags);
+	void	(*pwgen)(char *inbuf, int size, int pw_flags);
 
 	pwgen = pw_phonemes;
 	if (isatty(1)) {
@@ -126,6 +128,8 @@ int main(int argc, char **argv)
 	}
 	if (optind < argc) {
 		pw_length = strtol(argv[optind], &tmp, 0);
+		if (pw_length < 5)
+			pwgen = pw_rand;
 		if (*tmp) {
 			fprintf(stderr, "Invalid password length: %s\n",
 				argv[optind]);
@@ -143,8 +147,11 @@ int main(int argc, char **argv)
 		}
 	}
 	
-	if (do_columns) 
+	if (do_columns) {
 		num_cols = term_width / (pw_length+1);
+		if (num_cols == 0)
+			num_cols = 1;
+	}
 	if (num_pw < 0)
 		num_pw = do_columns ? num_cols * 20 : 1;
 	
@@ -160,7 +167,8 @@ int main(int argc, char **argv)
 		else
 			printf("%s ", buf);
 	}
-	if ((i % num_cols) != 0 && (num_cols > 1))
+	if ((num_cols > 1) && ((i % num_cols) != 0))
 		fputc('\n', stdout);
 	free(buf);
+	return 0;
 }

@@ -1,3 +1,37 @@
+2002-07-15  Theodore Ts'o  <tytso@mit.edu>
+
+	* Release of pwgen 2.02
+
+	* pwgen.c (main): If the number of characters is less than 5,
+		force the use of the fully random generator, since the
+		quality of phonetic generator is really bad if the lengths
+		are small --- and if the length is less than or equal to
+		2, pwgen will loop forever.  (Addresses Debian bug #117137)
+
+	* pw_rand.c: Add most punctuation characters to the "bad
+		characters list", so that the random passwords are much
+		more usable.
+
+	* pwgen.1: Fix e-mail address in man page.  (Addresses Debian bug
+		#150579)
+
+	* Makefile.in (WALL_OPTS): Add gcc options to do lots of nit-picky
+		checking.
+
+	* pwgen.c, pw_phonemes.c, pw_rand.c, pwgen.c, pwgen.h, randnum.c:
+		Add const declarations and other code cleanups for
+		avoidining -Wall warnings.
+
+	* pwgen.c, pw_rand.c: #include the appropriate header files to
+		avoid -Wall warnings.  (Addresses Debian bug #126774).
+
+	* pwgen.c (main): Fix floating point exception errors if the
+		password is longer than terminal width.  Addresses Debian
+		bug #113571.
+
+	* pwgen.c (main): Return an exit value of 0 when pwgen on
+		success.  (Addresses Debian bugs #118181 and #102063).
+
 2001-06-19  Theodore Tso  <tytso@valinux.com>
 
 	* Release of pwgen 2.01

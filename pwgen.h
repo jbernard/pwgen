@@ -1,15 +1,15 @@
 /*
  * pwgen.h --- header file for password generator
  *
- * Copyright (C) 2001 by Theodore Ts'o
+ * Copyright (C) 2001,2002 by Theodore Ts'o
  * 
  * This file may be distributed under the terms of the GNU Public
  * License.
  */
 
 struct pw_element {
-	char	*str;
-	int	flags;
+	const char	*str;
+	int		flags;
 };
 
 /*
@@ -27,9 +27,9 @@ struct pw_element {
 #define PW_ONE_CASE	0x0002
 
 struct pwgen_func {
-	char	*name;
-	void	(*func)(char *buf, int size, int pw_flags);
-	int	flags;
+	const char	*name;
+	void		(*func)(char *buf, int size, int pw_flags);
+	int		flags;
 };
 
 /* Function prototypes */

@@ -1,7 +1,7 @@
 /*
  * randnum.c -- generate (good) randum numbers.
  *
- * Copyright (C) 2001 by Theodore Ts'o
+ * Copyright (C) 2001,2002 by Theodore Ts'o
  * 
  * This file may be distributed under the terms of the GNU Public
  * License.
@@ -18,7 +18,7 @@
 #include "pwgen.h"
 
 #ifdef HAVE_DRAND48
-extern double drand48();
+extern double drand48(void);
 #endif
 
 /* Borrowed/adapted from e2fsprogs's UUID generation code */
@@ -60,8 +60,8 @@ int pw_random_number(int max_num)
 {
 	int i, fd = get_random_fd();
 	int lose_counter = 0, nbytes=4;
-	unsigned int rand;
-	char *cp = (char *) &rand;
+	unsigned int rand_num;
+	char *cp = (char *) &rand_num;
 
 	if (fd >= 0) {
 		while (nbytes > 0) {
@@ -80,7 +80,7 @@ int pw_random_number(int max_num)
 		}
 	}
 	if (nbytes == 0)
-		return (rand % max_num);
+		return (rand_num % max_num);
 
 	/* OK, we weren't able to use /dev/random, fall back to rand/rand48 */
 
