@@ -47,7 +47,7 @@ static int get_random_fd(void)
 #ifdef HAVE_DRAND48
 		drand48();
 #else
-		rand();
+		random();
 #endif
 	return fd;
 }
@@ -84,7 +84,7 @@ int pw_random_number(int max_num)
 
 	/* OK, we weren't able to use /dev/random, fall back to rand/rand48 */
 
-#ifdef RAND48
+#ifdef HAVE_DRAND48
 	return ((int) ((drand48() * max_num)));
 #else
 	return ((int) (random() / ((float) RAND_MAX) * max_num));

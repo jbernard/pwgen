@@ -1,3 +1,35 @@
+2003-01-15  Theodore Ts'o  <tytso@mit.edu>
+
+	* Release of pwgen 2.03
+
+	* randnum.c: Fix #ifdef to use HAVE_DRAND48 instead of just
+		RAND48.  This caused random() to be callled without first
+		initializing the right random number generator.  This
+		apparently caused pwgen to core dump under AIX, which
+		seems surprising.
+
+	* pw_rand.c (pw_rand): Use a list of acceptable characters instead
+		of a list of unacceptable characters.  This is slightly
+		faster, and the code is cleaner and easier to understand.
+
+	* randnum.c (get_random_fd): Use random() instead of rand() since
+		we initialize the random number generator using srandom() if
+		/dev/urandom and drand48() are not present.
+
+	* Makefile.in (pwgen): Use LDFLAGS when linking pwgen.
+
+	* pw_phonemes.c (pw_phonemes): Fix bug in how we call 
+		pw_random_number() so that we generate passwords that
+		start with vowels, and insert numbers from 0-9, not just
+		0-8.  (Oops!)  Addresses Debian bug #176688.
+
+2002-07-16  Theodore Ts'o  <tytso@mit.edu>
+
+	* Makefile.in (install): Create the directory using $mandir, and
+		not $(prefix)/man.
+
+	* pw_phonemes.c: Add missing #include of string.h
+
 2002-07-15  Theodore Ts'o  <tytso@mit.edu>
 
 	* Release of pwgen 2.02
