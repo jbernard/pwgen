@@ -67,9 +67,6 @@ $(srcdir)/.exclude-file:
 		-print) | sed -e "s/src/$$a/" > $(srcdir)/.exclude-file
 	echo "$(SRCROOT)/build" >> $(srcdir)/.exclude-file
 	echo "$(SRCROOT)/rpm.log" >> $(srcdir)/.exclude-file
-	echo "$(SRCROOT)/config.log" >> $(srcdir)/.exclude-file
-	echo "$(SRCROOT)/config.status" >> $(srcdir)/.exclude-file
-	echo "$(SRCROOT)/config.cache" >> $(srcdir)/.exclude-file
 	echo "$(SRCROOT)/TODO" >> $(srcdir)/.exclude-file
 	echo "$(SRCROOT)/.exclude-file" >> $(srcdir)/.exclude-file
 		>> $(srcdir)/.exclude-file
