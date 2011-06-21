@@ -1,3 +1,13 @@
+pwgen (2.05-1) unstable; urgency=low
+
+  * Add a udeb for debian-installer.  Thanks to Martin Michlmayr for the
+    patch.  (Closes: #271115)
+  * Fix bug which would cause pwgen to loop forever if the password length
+    is 1.
+  * Fix spelling errors in the man page.  (Closes: #323538)
+
+ -- Theodore Y. Ts'o <tytso@mit.edu>  Sun, 15 Jan 2006 23:16:59 -0500
+
 pwgen (2.04-1) unstable; urgency=low
 
   * New upstream version.

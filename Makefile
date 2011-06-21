@@ -1,29 +1,29 @@
 PWGEN_VERSION=2.05
 
-srcdir = @srcdir@
-top_srcdir = @top_srcdir@
-VPATH = @srcdir@
+srcdir = .
+top_srcdir = .
+
 top_builddir = .
 my_dir = .
-prefix = @prefix@
-mandir = @mandir@
-INSTALL = @INSTALL@
-INSTALL_PROGRAM = @INSTALL_PROGRAM@
-INSTALL_DATA = @INSTALL_DATA@
+prefix = /usr/local
+mandir = ${prefix}/man
+INSTALL = /usr/bin/install -c
+INSTALL_PROGRAM = ${INSTALL}
+INSTALL_DATA = ${INSTALL} -m 644
 
 WALL_OPTS = -Wall -Wnested-externs -Wstrict-prototypes -Wmissing-prototypes \
 	-Wshadow -Wwrite-strings -Wpointer-arith -Wcast-qual -Wcast-align \
 	-pedantic
-CC = @CC@
-DEFS = @DEFS@
-CFLAGS = @CFLAGS@ $(WALL_OPTS)
-CPPFLAGS = @CPPFLAGS@
+CC = gcc
+DEFS = -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DHAVE_DRAND48=1 -DHAVE_GETOPT_LONG=1 -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_GETOPT_H=1 
+CFLAGS = -g -O2 $(WALL_OPTS)
+CPPFLAGS = 
 ALL_CFLAGS = $(CPPFLAGS) $(DEFS) $(USE_WFLAGS) $(CFLAGS) $(XTRA_CFLAGS) 
-LDFLAGS = @LDFLAGS@
-RM = @RM@
-MV = @MV@
-SED = @SED@
-PERL = @PERL@
+LDFLAGS = 
+RM = /bin/rm
+MV = /bin/mv
+SED = /bin/sed
+PERL = /usr/bin/perl
 TAR = tar
 
 all:: pwgen
