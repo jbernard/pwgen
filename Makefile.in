@@ -1,4 +1,4 @@
-PWGEN_VERSION=2.03
+PWGEN_VERSION=2.04
 
 srcdir = @srcdir@
 top_srcdir = @top_srcdir@
@@ -13,7 +13,7 @@ INSTALL_DATA = @INSTALL_DATA@
 
 WALL_OPTS = -Wall -Wnested-externs -Wstrict-prototypes -Wmissing-prototypes \
 	-Wshadow -Wwrite-strings -Wpointer-arith -Wcast-qual -Wcast-align \
-	-Wtraditional
+	-pedantic
 CC = @CC@
 DEFS = @DEFS@
 CFLAGS = @CFLAGS@ $(WALL_OPTS)
@@ -31,9 +31,9 @@ all:: pwgen
 .c.o:
 	$(CC) -c $(ALL_CFLAGS) $< -o $@
 
-OBJS= pwgen.o pw_phonemes.o pw_rand.o randnum.o
+OBJS= pwgen.o pw_phonemes.o pw_rand.o randnum.o sha1.o sha1num.o
 
-SRCS= pwgen.c pw_phonemes.c pw_rand.c randnum.c
+SRCS= pwgen.c pw_phonemes.c pw_rand.c randnum.c sha1.c sha1num.c
 
 
 pwgen: $(OBJS)
@@ -43,14 +43,14 @@ install: pwgen pwgen.1
 	mkdir -p $(DESTDIR)$(prefix)/bin $(DESTDIR)$(mandir)/man1
 	$(INSTALL_PROGRAM) pwgen $(DESTDIR)$(prefix)/bin/pwgen
 	$(INSTALL_DATA) $(srcdir)/pwgen.1 $(DESTDIR)$(mandir)/man1/pwgen.1
-	
+
 clean:
 	$(RM) -f $(OBJS) pwgen *~
 
-distclean:
-	$(RM) -f config.status config.log config.cache Makefile \
-		$(srcdir)/Makefile.in.old $(srcdir)/.exclude-file
-
+distclean: clean
+	$(RM) -rf config.status config.log config.cache Makefile \
+		$(srcdir)/Makefile.in.old $(srcdir)/.exclude-file \
+		$(srcdir)/autom4te.cache
 
 #
 # Build source tar ball...
@@ -127,3 +127,5 @@ pwgen.o: pwgen.c pwgen.h
 pw_phonemes.o: pw_phonemes.c pwgen.h
 pw_rand.o: pw_rand.c pwgen.h
 randnum.o: randnum.c pwgen.h
+sha1.o: sha1.c sha1.h 
+sha1num.o: sha1num.c sha1.h pwgen.h

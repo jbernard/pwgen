@@ -1,9 +1,41 @@
+2005-06-15  Theodore Ts'o  <tytso@mit.edu>
+
+	* pw_phonemes.c (pw_phonemes): Allow one or more capital letters
+		and one or more digits in the generated passwords.
+		(Addresses Debian Bug: #182595)
+
+2005-06-14  Theodore Ts'o  <tytso@mit.edu>
+
+	* pwgen.1: Explain that human-memorable passwords are vulnerable
+		to off-line brute force attacks.  (Addresses Debian Bug:
+		#276976)
+
+	* pwgen.c, pwgen.h, pw_rand.c, pwgen.1: Make -A and -0 aliases to
+		--no-capitalize and --no-numerals, and make those options
+		work when --secure is specified.
+
+	* pwgen.c, pwgen.h, pw_rand.c, pw_phonemes.c, pwgen.c: Add support
+		for the --symbols/-y option, which adds special characters
+		to the generated password.  (Addresses Debian Bug: #154561)
+	
+	* pwgen.c: Add -H, --sha1 option, to allow computing reproducible
+		passwords, given a known file, and a known seed.
+		(ie: pwgen -H ~/my_favourite.mp3#olivier@guerrier.com gives me
+		a list of possibles passwords for my pop3 account, and I can
+		ask this list again and again).   Feature suggested and
+		implemented by Olivier Guerrier <olivier@guerrier.com>.
+
+2005-06-13  Theodore Ts'o  <tytso@mit.edu>
+
+	* Fix obvious spelling typo in pwgen.1.  (Addresses Debian Bug
+		#311461)
+
 2003-01-15  Theodore Ts'o  <tytso@mit.edu>
 
 	* Release of pwgen 2.03
 
 	* randnum.c: Fix #ifdef to use HAVE_DRAND48 instead of just
-		RAND48.  This caused random() to be callled without first
+		RAND48.  This caused random() to be called without first
 		initializing the right random number generator.  This
 		apparently caused pwgen to core dump under AIX, which
 		seems surprising.
